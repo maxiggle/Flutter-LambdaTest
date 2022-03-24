@@ -3,7 +3,7 @@
    <application
         android:label="code_magic_test"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
        <queries>
            <intent>
                <action android:name="android.intent.action.VIEW" />

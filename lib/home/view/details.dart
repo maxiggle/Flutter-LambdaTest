@@ -21,6 +21,8 @@ class DetailedPage extends StatelessWidget {
       if (!await launch(_url)) throw 'Could not launch $_url';
     }
 
+    final String authorsImageUrl =
+        'https://images.quotable.dev/profile/400/${post.slug}.jpg';
     return BlocProvider(
       create: (_) => AuthorsBloc(httpClient: http.Client()),
       child: Scaffold(
@@ -85,16 +87,32 @@ class DetailedPage extends StatelessWidget {
                       )),
                 ),
                 Positioned(
-                    right: 0,
-                    left: 0,
-                    child: CircleAvatar(
-                        radius: (70),
-                        backgroundColor: Colors.white,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: Image.network(
-                              'https://images.quotable.dev/profile/400/${post.slug}.jpg'),
-                        ))),
+                  right: 0,
+                  left: 0,
+                  child: CircleAvatar(
+                    radius: (70),
+                    backgroundColor: Colors.white,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.network(
+                        authorsImageUrl,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.blue,
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
               ],
             )),
       ),
