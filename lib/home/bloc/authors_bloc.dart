@@ -2,27 +2,19 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:http/http.dart' as http;
-import 'package:stream_transform/stream_transform.dart';
 
 import '../models/post.dart';
 
 part 'authors_event.dart';
 part 'authors_state.dart';
 
-const throttleDuration = Duration(milliseconds: 100);
-EventTransformer<E> throttleDroppable<E>(Duration duration) {
-  return (events, mapper) {
-    return droppable<E>().call(events.throttle(duration), mapper);
-  };
-}
-
 class AuthorsBloc extends Bloc<AuthorsEvent, AuthorsState> {
   AuthorsBloc({required this.httpClient}) : super(const AuthorsState()) {
-    on<PostFetched>(_onPostFetched,
-        transformer: throttleDroppable(throttleDuration));
+    on<PostFetched>(
+      _onPostFetched,
+    );
   }
   final http.Client httpClient;
   Future<void> _onPostFetched(

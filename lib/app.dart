@@ -7,8 +7,9 @@ import 'package:http/http.dart' as http;
 class App extends MaterialApp {
   App()
       : super(
+            debugShowCheckedModeBanner: false,
             home: BlocProvider(
-          create: (_) => AuthorsBloc(httpClient: http.Client()),
-          child: const PostsPage(),
-        ));
+              create: (_) => AuthorsBloc(httpClient: http.Client()),
+              child: const PostsPage(),
+            ));
 }

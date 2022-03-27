@@ -12,7 +12,7 @@ class DetailedPage extends StatelessWidget {
     Key? key,
     required this.post,
   }) : super(key: key);
-  final Post post;
+  final post;
 
   @override
   Widget build(BuildContext context) {
