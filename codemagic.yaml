@@ -28,7 +28,7 @@ workflows:
         test_report: test-results/flutter.json
 
     artifacts:
-      - build/**/outputs/**/*.apk
+      - build/**/outputs/**/*.aab
     publishing:
       email:
         recipients:
