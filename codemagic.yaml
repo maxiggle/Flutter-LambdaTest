@@ -28,7 +28,15 @@ workflows:
       - name: Build APK with Flutter
         script: |
                     cd . && flutter build apk --release
-
+      - name: Set up key properties
+        script: |
+          echo $CM_KEYSTORE | base64 --decode > /home/geffy/keystore_name.jks
+          cat >> "$CM_BUILD_DIR/android/key.properties" <<EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          storeFile=/home/geffy/keystore_name.jks
+          EOF          
     artifacts:
       - build/**/outputs/apk/**/*.apk
     publishing:
