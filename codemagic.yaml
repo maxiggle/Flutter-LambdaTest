@@ -20,16 +20,19 @@ workflows:
           source: true
       cancel_previous_builds: false
     scripts:
-      - echo 'previous step'
       - name: Unit tests
         script: |
           mkdir -p test-results
           flutter test test --machine > test-results/flutter.json     
         test_report: test-results/flutter.json
+      - name: Build APK with Flutter
+        script: |
+                    cd . && flutter build apk --release
 
     artifacts:
-      - build/**/outputs/**/*.aab
+      - build/**/outputs/apk/**/*.apk
     publishing:
       email:
         recipients:
           - clsyfriday@gmail.com
+    
