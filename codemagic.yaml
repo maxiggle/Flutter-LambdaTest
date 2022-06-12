@@ -27,18 +27,10 @@ workflows:
           mkdir -p test-results
           flutter test test --machine > test-results/flutter.json     
         test_report: test-results/flutter.json
-      - name: Set up key properties
-        script: |
-          echo $CM_KEYSTORE | base64 --decode > $CM_KEYSTORE_PATH   # Not required if using team code signing identities
-          cat >> "$CM_BUILD_DIR/how-to-publish-flutter-apps-to-playstore/android/key.properties" <<EOF
-          storePassword=$CM_KEYSTORE_PASSWORD
-          keyPassword=$CM_KEY_PASSWORD
-          keyAlias=$CM_KEY_ALIAS
-          storeFile=$CM_KEYSTORE_PATH
-          EOF          
       - name: Build APK with Flutter
         script: |
-                    cd . && flutter build apk --release
+          echo $CM_KEYSTORE | base64 --decode > $CM_KEYSTORE_PATH   # Not required if using team code signing identities
+          cd android && ./gradlew assembleRelease
     artifacts:
       - build/**/outputs/apk/**/*.apk
     publishing:
