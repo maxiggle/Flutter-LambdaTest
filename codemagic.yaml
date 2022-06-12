@@ -4,6 +4,8 @@ workflows:
     instance_type: mac_mini
     max_build_duration: 60
     environment:
+      groups:
+        - keystore_credentials
       vars:
         PUBLIC_ENV_VAR: "value here"
       flutter: stable
@@ -25,18 +27,18 @@ workflows:
           mkdir -p test-results
           flutter test test --machine > test-results/flutter.json     
         test_report: test-results/flutter.json
-      - name: Build APK with Flutter
-        script: |
-                    cd . && flutter build apk --release
       - name: Set up key properties
         script: |
-          echo $CM_KEYSTORE | base64 --decode > /home/geffy/keystore_name.jks
-          cat >> "$CM_BUILD_DIR/android/key.properties" <<EOF
+          echo $CM_KEYSTORE | base64 --decode > $CM_KEYSTORE_PATH   # Not required if using team code signing identities
+          cat >> "$CM_BUILD_DIR/project_directory/android/key.properties" <<EOF
           storePassword=$CM_KEYSTORE_PASSWORD
           keyPassword=$CM_KEY_PASSWORD
           keyAlias=$CM_KEY_ALIAS
-          storeFile=/home/geffy/keystore_name.jks
+          storeFile=$CM_KEYSTORE_PATH
           EOF          
+      - name: Build APK with Flutter
+        script: |
+                    cd . && flutter build apk --release
     artifacts:
       - build/**/outputs/apk/**/*.apk
     publishing:
