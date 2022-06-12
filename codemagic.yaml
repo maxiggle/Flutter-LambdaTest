@@ -30,7 +30,7 @@ workflows:
       - name: Set up key properties
         script: |
           echo $CM_KEYSTORE | base64 --decode > $CM_KEYSTORE_PATH   # Not required if using team code signing identities
-          cat >> "$CM_BUILD_DIR/project_directory/android/key.properties" <<EOF
+          cat >> "$CM_BUILD_DIR/how-to-publish-flutter-apps-to-playstore/android/key.properties" <<EOF
           storePassword=$CM_KEYSTORE_PASSWORD
           keyPassword=$CM_KEY_PASSWORD
           keyAlias=$CM_KEY_ALIAS
