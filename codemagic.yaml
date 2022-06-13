@@ -31,6 +31,9 @@ workflows:
         script: |
           echo $CM_KEYSTORE | base64 --decode > $CM_KEYSTORE_PATH   # Not required if using team code signing identities
           cd . && flutter build apk --release
+      - name: Submitting app to LambdaTest
+        script: |
+          curl --location --request POST 'https://manual-api.lambdatest.com/app/upload/realDevice' --header 'Y2xzeWZyaWRheQ==: Basic $LAMBDATEST' --form 'name="lambda1"' --form 'appFile=@"app/build/outputs/apk/release/app-release.apk"'     
     artifacts:
       - build/**/outputs/apk/**/*.apk
     publishing:
