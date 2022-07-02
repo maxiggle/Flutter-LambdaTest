@@ -35,7 +35,7 @@ workflows:
         script: |
           cd ./build/app/outputs/apk/release
           ls 
-          curl --location --request POST 'https://manual-api.lambdatest.com/app/upload/realDevice' --header 'Authorization: Basic $LAMBDA_KEY' --form 'name="lambda1"' --form 'appFile=@./build/app/outputs/apk/release/**.apk'     
+          curl --location --request POST 'https://manual-api.lambdatest.com/app/upload/realDevice' --header 'Authorization: Basic $LAMBDA_KEY' --form 'name="lambda1"' --form appFile=@"${./build/app/outputs/apk/release/**.apk}"    
     artifacts:
       - build/**/outputs/apk/**/*.apk
     publishing:
