@@ -33,6 +33,8 @@ workflows:
           cd . && flutter build apk --release
       - name: Submitting app to LambdaTest
         script: |
+          cd ./clone/build/app/outputs/apk/
+          ls 
           curl --location --request POST 'https://manual-api.lambdatest.com/app/upload/realDevice' --header 'Authorization: Basic $LAMBDA_KEY' --form 'name="lambda1"' --form 'appFile=@"./clone/build/app/outputs/apk/release/*.apk"'     
     artifacts:
       - build/**/outputs/apk/**/*.apk
