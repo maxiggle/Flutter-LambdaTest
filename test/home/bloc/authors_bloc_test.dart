@@ -42,7 +42,6 @@ void main() {
     });
 
     group('Should tell if a post was fetched', () {
-      
       blocTest<AuthorsBloc, AuthorsState>(
         'emits successful status when http fetches initial posts',
         setUp: () {
