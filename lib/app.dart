@@ -5,11 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
 class App extends MaterialApp {
-  App()
+  App({Key? key})
       : super(
-            debugShowCheckedModeBanner: false,
-            home: BlocProvider(
-              create: (_) => AuthorsBloc(httpClient: http.Client()),
-              child: const PostsPage(),
-            ));
+          key: key,
+          debugShowCheckedModeBanner: false,
+          home: BlocProvider(
+            create: (_) => AuthorsBloc(httpClient: http.Client()),
+            child: const PostsPage(),
+          ),
+        );
 }

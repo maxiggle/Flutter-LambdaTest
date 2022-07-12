@@ -1,18 +1,18 @@
 import 'package:code_magic_test/home/bloc/authors_bloc.dart';
+import 'package:code_magic_test/home/models/post.dart';
 import 'package:code_magic_test/home/widgets/details_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
-import '../models/post.dart';
-
 class DetailedPage extends StatelessWidget {
-  DetailedPage({
+  const DetailedPage({
     Key? key,
     required this.post,
   }) : super(key: key);
-  final post;
+
+  final Post post;
 
   @override
   Widget build(BuildContext context) {
