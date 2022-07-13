@@ -1,17 +1,24 @@
-import 'package:code_magic_test/app.dart';
-import 'package:flutter/material.dart';
+import 'package:code_magic_test/home/view/details.dart';
+import 'package:code_magic_test/home/widgets/post_list_item.dart';
+import 'package:code_magic_test/main.dart' as app;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  testWidgets(
-      "When a authors name is clicked "
-      "I am routed to see the full details of the author",
-      (WidgetTester tester) async {
-    await tester.pumpWidget(App());
-    await tester.tap(find.byWidget(const ListTile()));
+  group('end-to-end test', () {
+    testWidgets('View Post Testing', (WidgetTester tester) async {
+      // Run app
+      app.main();
+      await tester.pumpAndSettle();
 
-    // expect(find.by, matcher)
+      // Expect to find a list of posts
+      expect(find.byType(PostListItem), findsWidgets);
+
+      // Tap on first post
+      await tester.tap(find.byType(PostListItem).first);
+      await tester.pumpAndSettle();
+
+      // Expect to find details page
+      expect(find.byType(DetailedPage), findsOneWidget);
+    });
   });
 }
