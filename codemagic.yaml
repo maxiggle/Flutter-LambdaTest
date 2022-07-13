@@ -21,23 +21,23 @@ workflows:
           include: true
           source: true
       cancel_previous_builds: false
-    scripts:
-      - name: Unit tests
-        script: |
-          mkdir -p test-results
-          flutter test test --machine > test-results/flutter.json     
-        test_report: test-results/flutter.json
-      - name: Build APK with Flutter
-        script: |
-          echo $CM_KEYSTORE | base64 --decode > $CM_KEYSTORE_PATH   # Not required if using team code signing identities
-          cd . && flutter build apk --release
-      - name: Submitting app to LambdaTest
-        script: |
-          cd ./build/app/outputs/apk/release
-          ls 
-          curl --location --request POST 'https://manual-api.lambdatest.com/app/upload/realDevice' --header 'Authorization: Basic $LAMBDA_KEY' --form 'name="lambdatest"' --form 'appFile=@"app-release.apk"'   
-    artifacts:
-      - build/**/outputs/apk/**/*.apk
+    # scripts:
+    #   - name: Unit tests
+    #     script: |
+    #       mkdir -p test-results
+    #       flutter test test --machine > test-results/flutter.json     
+    #     test_report: test-results/flutter.json
+    #   - name: Build APK with Flutter
+    #     script: |
+    #       echo $CM_KEYSTORE | base64 --decode > $CM_KEYSTORE_PATH   # Not required if using team code signing identities
+    #       cd . && flutter build apk --release
+    #   - name: Submitting app to LambdaTest
+    #     script: |
+    #       cd ./build/app/outputs/apk/release
+    #       ls 
+    #       curl --location --request POST 'https://manual-api.lambdatest.com/app/upload/realDevice' --header 'Authorization: Basic $LAMBDA_KEY' --form 'name="lambdatest"' --form 'appFile=@"app-release.apk"'   
+    # artifacts:
+      # - build/**/outputs/apk/**/*.apk
     publishing:
       email:
         recipients:
