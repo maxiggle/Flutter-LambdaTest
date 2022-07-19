@@ -6,6 +6,7 @@ workflows:
     environment:
       groups:
         - keystore_credentials
+        - lambda_key
       vars:
         PUBLIC_ENV_VAR: "value here"
       flutter: stable
