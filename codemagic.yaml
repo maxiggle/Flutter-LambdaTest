@@ -35,7 +35,7 @@ workflows:
       - name: Submitting app to LambdaTest
         script: |
           cd ./build/app/outputs/apk/release
-          curl --location --request POST 'https://manual-api.lambdatest.com/app/upload/realDevice' --header 'Authorization: Basic $LAMBDATEST' --form 'name="lambda1"' --form 'appFile=@"app-release.apk"'  
+          curl --location --request POST 'https://manual-api.lambdatest.com/app/upload/realDevice' --header 'Authorization: Basic "$LAMBDATEST'" --form 'name="lambda1"' --form 'appFile=@"app-release.apk"'  
     artifacts:
       - build/**/outputs/apk/**/*.apk
     publishing:
